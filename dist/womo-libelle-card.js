@@ -8,7 +8,7 @@
  * Lizenz: MIT
  */
 
-const CARD_VERSION = "1.0.0";
+const CARD_VERSION = "1.1.0";
 const CARD_TAG = "womo-libelle-card";
 const EDITOR_TAG = "womo-libelle-card-editor";
 
@@ -24,6 +24,8 @@ const DEFAULTS = {
   front_label: "vorne",
   show_values: true,
   show_status: true,
+  invert_nick: false, // vorne/hinten tauschen (Sensor liefert inverse Nick-Werte)
+  invert_roll: false, // links/rechts tauschen (Sensor liefert inverse Roll-Werte)
 };
 
 // Farben wie im ESPHome-Display
@@ -217,8 +219,9 @@ class WomoLibelleCard extends HTMLElement {
 
     const sn = this._hass.states[c.nick_entity];
     const sr = this._hass.states[c.roll_entity];
-    const n = sn ? parseFloat(sn.state) : NaN;
-    const r = sr ? parseFloat(sr.state) : NaN;
+    // Vorzeichen bei Bedarf umdrehen (unabhängig voneinander)
+    const n = (sn ? parseFloat(sn.state) : NaN) * (c.invert_nick ? -1 : 1);
+    const r = (sr ? parseFloat(sr.state) : NaN) * (c.invert_roll ? -1 : 1);
 
     if (!Number.isFinite(n) || !Number.isFinite(r)) {
       e.bubble.style.transform = "translate(0px, 0px)";
@@ -315,6 +318,8 @@ const SCHEMA = [
     schema: [
       { name: "show_values", selector: { boolean: {} } },
       { name: "show_status", selector: { boolean: {} } },
+      { name: "invert_nick", selector: { boolean: {} } },
+      { name: "invert_roll", selector: { boolean: {} } },
     ],
   },
 ];
@@ -331,6 +336,8 @@ const LABELS = {
   front_label: "Beschriftung oben",
   show_values: "Winkel anzeigen",
   show_status: "Status anzeigen",
+  invert_nick: "Vorne/hinten tauschen",
+  invert_roll: "Links/rechts tauschen",
 };
 
 class WomoLibelleCardEditor extends HTMLElement {
