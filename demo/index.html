@@ -22,18 +22,21 @@
 <div class="row" style="margin-top:16px">
   <div class="card"><womo-libelle-card id="c1"></womo-libelle-card></div>
   <div class="small"><womo-libelle-card id="c2"></womo-libelle-card></div>
+  <div class="small"><womo-libelle-card id="c3"></womo-libelle-card></div>
 </div>
 <script src="../dist/womo-libelle-card.js"></script>
 <script>
   const c1 = document.getElementById("c1"), c2 = document.getElementById("c2");
   c1.setConfig({ title: "Womo Ausrichtung", nick_entity: "sensor.n", roll_entity: "sensor.r", zero_entity: "button.z" });
+  const c3 = document.getElementById("c3");
+  c3.setConfig({ title: "Invertiert", nick_entity: "sensor.n", roll_entity: "sensor.r", invert_nick: true, invert_roll: true, size: 200 });
   c2.setConfig({ nick_entity: "sensor.n", roll_entity: "sensor.r", deg_per_ring: 2, show_status: false });
   function upd() {
     const n = document.getElementById("n").value, r = document.getElementById("r").value;
     document.getElementById("nv").textContent = n; document.getElementById("rv").textContent = r;
     const hass = { states: { "sensor.n": { state: n }, "sensor.r": { state: r } },
                    callService: (d, s, data) => console.log("callService", d, s, data) };
-    c1.hass = hass; c2.hass = hass;
+    c1.hass = hass; c2.hass = hass; c3.hass = hass;
   }
   document.getElementById("n").oninput = upd; document.getElementById("r").oninput = upd; upd();
 </script>
