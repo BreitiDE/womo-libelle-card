@@ -14,7 +14,7 @@ Eine Lovelace-Karte für Home Assistant, die eine Libelle (Wasserwaage) zum Ausr
 ## Installation über HACS
 
 1. HACS öffnen → Menü oben rechts (⋮) → **Benutzerdefinierte Repositories**
-2. Repository-URL eintragen: `https://github.com/<DEIN-GITHUB-NAME>/womo-libelle-card`, Typ **Dashboard** (bei älteren HACS-Versionen „Lovelace“)
+2. Repository-URL eintragen: `https://github.com/BreitiDE/womo-libelle-card`, Typ **Dashboard** (bei älteren HACS-Versionen „Lovelace“)
 3. „WoMo Libelle Card“ suchen und **Herunterladen**
 4. Browser neu laden (bei Bedarf Cache leeren)
 
@@ -77,16 +77,6 @@ roll_entity: sensor.technik_esp_womo_libelle_roll
 size: 200
 show_status: false
 ```
-
-## Lokale Vorschau
-
-`demo/index.html` im Browser öffnen – die Regler simulieren die Sensoren, Home Assistant wird dafür nicht benötigt.
-
-## Neue Version veröffentlichen
-
-1. `CARD_VERSION` in `dist/womo-libelle-card.js` hochzählen
-2. Auf GitHub ein Release mit passendem Tag anlegen (z. B. `v1.0.1`)
-3. Der Workflow `release.yaml` hängt die JS-Datei automatisch an das Release, HACS bietet das Update dann an
 
 ## Lizenz
 
