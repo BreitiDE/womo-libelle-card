@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WoMo Libelle Card – Demo</title>
+<style>
+  body { margin: 0; padding: 24px; background: #111; color: #eee; font-family: Roboto, sans-serif;
+         --primary-text-color: #e1e1e1; --divider-color: #444; --secondary-background-color: #2a2a2a; }
+  ha-card { display: block; background: #1c1c1c; border-radius: 12px; }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .card { width: 360px; }
+  .small { width: 200px; }
+  label { display: block; margin: 8px 0 4px; font-size: 14px; }
+  input { width: 260px; }
+</style>
+</head>
+<body>
+<p>Lokale Vorschau ohne Home Assistant. Die Regler simulieren die Sensoren.</p>
+<label>Nick <span id="nv">0.8</span>°</label><input id="n" type="range" min="-5" max="5" step="0.1" value="0.8">
+<label>Roll <span id="rv">-1.6</span>°</label><input id="r" type="range" min="-5" max="5" step="0.1" value="-1.6">
+<div class="row" style="margin-top:16px">
+  <div class="card"><womo-libelle-card id="c1"></womo-libelle-card></div>
+  <div class="small"><womo-libelle-card id="c2"></womo-libelle-card></div>
+</div>
+<script src="../dist/womo-libelle-card.js"></script>
+<script>
+  const c1 = document.getElementById("c1"), c2 = document.getElementById("c2");
+  c1.setConfig({ title: "Womo Ausrichtung", nick_entity: "sensor.n", roll_entity: "sensor.r", zero_entity: "button.z" });
+  c2.setConfig({ nick_entity: "sensor.n", roll_entity: "sensor.r", deg_per_ring: 2, show_status: false });
+  function upd() {
+    const n = document.getElementById("n").value, r = document.getElementById("r").value;
+    document.getElementById("nv").textContent = n; document.getElementById("rv").textContent = r;
+    const hass = { states: { "sensor.n": { state: n }, "sensor.r": { state: r } },
+                   callService: (d, s, data) => console.log("callService", d, s, data) };
+    c1.hass = hass; c2.hass = hass;
+  }
+  document.getElementById("n").oninput = upd; document.getElementById("r").oninput = upd; upd();
+</script>
+</body>
+</html>
