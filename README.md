@@ -1,6 +1,6 @@
 # WoMo Libelle Card
 
-Eine Lovelace-Karte für Home Assistant, die eine Libelle (Wasserwaage) zum Ausrichten des Wohnmobils anzeigt – im gleichen Design wie das runde GC9A01-Display der ESPHome-Libelle.
+Eine Lovelace-Karte für Home Assistant, die eine Libelle (Wasserwaage) zum Ausrichten des Wohnmobils anzeigt.
 
 ![Vorschau](screenshot.png)
 
